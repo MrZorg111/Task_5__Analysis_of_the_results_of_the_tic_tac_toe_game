@@ -26,6 +26,7 @@ std::string coordinates (std::string a, std::string b, std::string c) {
                     || (a[0] == 'O' && b[1] == 'O' && c[2] == 'O') || (c[0] == 'O' && b[1] == 'O' && a[2] == 'O')) {
         return "Vanya won";
     }
+    return {};
 }
 
     int main() {
