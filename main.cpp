@@ -13,36 +13,18 @@ std::string check (std::string a) {
     return {};
 }
 
-std::string coordinates (int a, int b, std::string c, std::string d, std::string e) {
-    std::string answer;
-    if (b == 0) {
-        for (int i = 0; i == a; i++) {
-            c[i];
-            if (i == a - 1) {
-                answer = c[i];
-                return answer;
-            }
-        }
-        if (b == 1) {
-            for (int i = 0; i == a; i++) {
-                d[i];
-                if (i == a - 1) {
-                    answer = d[i];
-                    return answer;
-                }
-            }
-        }
-        if (b == 2) {
-            for (int i = 0; i == a; i++) {
-                e[i];
-                if (i == a - 1) {
-                    answer = e[i];
-                    return answer;
-                }
-            }
-
-        }
-
+std::string coordinates (std::string a, std::string b, std::string c) {
+    if ((a[0] == 'X' && b[0] == 'X' && c[0] == 'X') || (a[1] == 'X' && b[1] == 'X' && c[1] == 'X')
+            || (a[0] == 'X' && b[2] == 'X' && c[2] == 'X') || (a[0] == 'X' && a[1] == 'X' && a[2] == 'X')
+                || (b[0] == 'X' && b[1] == 'X' && b[2] == 'X') || (c[0] == 'X' && c[1] == 'X' && c[2] == 'X')
+                    || (a[0] == 'X' && b[1] == 'X' && c[2] == 'X') || (c[0] == 'X' && b[1] == 'X' && a[2] == 'X')) {
+        return "Petya won";
+    }
+    else if ((a[0] == 'O' && b[0] == 'O' && c[0] == 'O') || (a[1] == 'O' && b[1] == 'O' && c[1] == 'O')
+            || (a[0] == 'O' && b[2] == 'O' && c[2] == 'O') || (a[0] == 'O' && a[1] == 'O' && a[2] == 'O')
+                || (b[0] == 'O' && b[1] == 'O' && b[2] == 'O') || (c[0] == 'O' && c[1] == 'O' && c[2] == 'O')
+                    || (a[0] == 'O' && b[1] == 'O' && c[2] == 'O') || (c[0] == 'O' && b[1] == 'O' && a[2] == 'O')) {
+        return "Vanya won";
     }
 }
 
@@ -57,12 +39,6 @@ std::string coordinates (int a, int b, std::string c, std::string d, std::string
             std::cout << "\nThird string:";
             std::cin >> str_3;
         } while (check(str_1) == "No!" || check(str_2) == "No!" || check(str_3) == "No!");
-        int x, y;
-        std::cout << "Enter coordinates:\n";
-        std::cout << "First coordinate:";
-        std::cin >> x;
-        std::cout << "Second coordinate:";
-        std::cin >> y;
 
-std::cout << coordinates(x, y, str_1, str_2, str_3);
+        std::cout << coordinates(str_1, str_2, str_3);
     }
