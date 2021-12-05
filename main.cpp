@@ -13,21 +13,20 @@ std::string check (std::string a) {
     }
     return {};
 }
-int check_result (std::string a, std::string b, std::string c) {
-    int result = 0;
+std::string check_result (std::string a, std::string b, std::string c) {
     if ((a[0] == 'X' && b[0] == 'X' && c[0] == 'X') || (a[1] == 'X' && b[1] == 'X' && c[1] == 'X')
         || (a[2] == 'X' && b[2] == 'X' && c[2] == 'X') || (a[0] == 'X' && a[1] == 'X' && a[2] == 'X')
         || (b[0] == 'X' && b[1] == 'X' && b[2] == 'X') || (c[0] == 'X' && c[1] == 'X' && c[2] == 'X')
         || (a[0] == 'X' && b[1] == 'X' && c[2] == 'X') || (c[0] == 'X' && b[1] == 'X' && a[2] == 'X')) {
-        result = 1;
+        return "X";
     }
     else if ((a[0] == 'O' && b[0] == 'O' && c[0] == 'O') || (a[1] == 'O' && b[1] == 'O' && c[1] == 'O')
              || (a[2] == 'O' && b[2] == 'O' && c[2] == 'O') || (a[0] == 'O' && a[1] == 'O' && a[2] == 'O')
              || (b[0] == 'O' && b[1] == 'O' && b[2] == 'O') || (c[0] == 'O' && c[1] == 'O' && c[2] == 'O')
              || (a[0] == 'O' && b[1] == 'O' && c[2] == 'O') || (c[0] == 'O' && b[1] == 'O' && a[2] == 'O')) {
-        result = 2;
+        return "O";
     }
-    return result;
+    return {};
 }
 int count_x (std::string a, std::string b, std::string c) {
     int count_x = 0;
@@ -74,25 +73,24 @@ int count_s (std::string a, std::string b, std::string c) {
     }
     return count_s;
 }
-std::string total_result (std::string a, std::string b, std::string c) {
-    int result = 0;
-    if ((check(a) == "No!" || check(b) == "No!" || check(c) == "No!")
-            || (count_x(a,b,c) < count_o(a,b,c)
-                || ((count_x(a,b,c) == count_o(a,b,c) && check_result(a,b,c) > 0)))
-                    || ((check_result(a,b,c) == 2 && count_x(a,b,c) > count_o(a,b,c))
-                        || (check_result(a,b,c) == 1 && count_x(a,b,c) == count_o(a,b,c)))) {
+std::string total_result (std::string s, std::string u, std::string f) {
+    std::string result;
+    result = check_result(s,u,f);
+    if (result == "X") {
+        return "Petya won!";
+    }if (result == "O") {
+        return "Vanya won!";
+    }
+    if ((check(s) == "No!" || check(u) == "No!" || check(f) == "No!")
+            || (count_x(s,u,f) < count_o(s,u,f)
+                || ((count_x(s,u,f) == count_o(s,u,f) && check_result(s,u,f) == "X")))
+                    || ((check_result(s,u,f) == "O" && count_x(s,u,f) > count_o(s,u,f))
+                        || (check_result(s,u,f) == "X" && count_x(s,u,f) == count_o(s,u,f)))) {
         return "Incorrect!";
     }
-    if ((count_x(a,b,c) > count_o(a,b,c) && count_s(a,b,c) == 0)
-            || (count_x(a,b,c) == count_o(a,b,c) && check_result(a,b,c) == 0)) {
+    if ((count_x(s,u,f) > count_o(s,u,f) && count_s(s,u,f) == 0)
+            || (count_x(s,u,f) == count_o(s,u,f) && (check_result(s,u,f) != "X" || "O"))) {
         return "Nobody!";
-    }
-
-    result = check_result(a,b,c);
-   if (result == 1) {
-        return "Petya won!";
-    }if (result == 2) {
-        return "Vanya won!";
     }
     return {};
 }
