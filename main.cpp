@@ -76,20 +76,21 @@ int count_s (std::string a, std::string b, std::string c) {
 std::string total_result (std::string s, std::string u, std::string f) {
     std::string result;
     result = check_result(s,u,f);
+    if ((check(s) == "No!" || check(u) == "No!" || check(f) == "No!")
+            || (count_x(s,u,f) < count_o(s,u,f)
+                || ((count_x(s,u,f) == count_o(s,u,f) && check_result(s,u,f) == "X")))
+                    || ((check_result(s,u,f) == "O" && count_x(s,u,f) > count_o(s,u,f))
+                        || (check_result(s,u,f) == "X" && count_x(s,u,f) == count_o(s,u,f)))
+                            || ((result == "X" && "O") && (count_x(s,u,f) > count_o(s,u,f) && count_s(s,u,f) == 0))) {
+        return "Incorrect!";
+    }
     if (result == "X") {
         return "Petya won!";
     }if (result == "O") {
         return "Vanya won!";
     }
-    if ((check(s) == "No!" || check(u) == "No!" || check(f) == "No!")
-            || (count_x(s,u,f) < count_o(s,u,f)
-                || ((count_x(s,u,f) == count_o(s,u,f) && check_result(s,u,f) == "X")))
-                    || ((check_result(s,u,f) == "O" && count_x(s,u,f) > count_o(s,u,f))
-                        || (check_result(s,u,f) == "X" && count_x(s,u,f) == count_o(s,u,f)))) {
-        return "Incorrect!";
-    }
     if ((count_x(s,u,f) > count_o(s,u,f) && count_s(s,u,f) == 0)
-            || (count_x(s,u,f) == count_o(s,u,f) && (check_result(s,u,f) != "X" || "O"))) {
+        || ((result != "X" && "O") && count_x(s,u,f) == count_o(s,u,f))) {
         return "Nobody!";
     }
     return {};
