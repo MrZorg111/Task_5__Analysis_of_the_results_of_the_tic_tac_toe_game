@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-        std::string check (std::string a) {
+std::string check (std::string a) {
 for (int i = 0; i < a.length(); i++) {
 if (a[i] != 'X' && a[i] != 'O' && a[i] != '.') {
 return "No!";
@@ -13,89 +13,51 @@ return "Yes!";
 }
 return {};
 }
-bool check_result_x (std::string a, std::string b, std::string c) {
-    if ((a[0] == 'X' && b[0] == 'X' && c[0] == 'X') || (a[1] == 'X' && b[1] == 'X' && c[1] == 'X')
-        || (a[2] == 'X' && b[2] == 'X' && c[2] == 'X') || (a[0] == 'X' && a[1] == 'X' && a[2] == 'X')
-        || (b[0] == 'X' && b[1] == 'X' && b[2] == 'X') || (c[0] == 'X' && c[1] == 'X' && c[2] == 'X')
-        || (a[0] == 'X' && b[1] == 'X' && c[2] == 'X') || (c[0] == 'X' && b[1] == 'X' && a[2] == 'X')) {
+bool check_result(std::string a, std::string b, std::string c, char d) {
+    if ((a[0] == d && b[0] == d && c[0] == d) || (a[1] == d && b[1] == d && c[1] == d)
+        || (a[2] == d && b[2] == d && c[2] == d) || (a[0] == d && a[1] == d && a[2] == d)
+        || (b[0] == d && b[1] == d && b[2] == d) || (c[0] == d && c[1] == d && c[2] == d)
+        || (a[0] == d && b[1] == d && c[2] == d) || (c[0] == d && b[1] == d && a[2] == d)) {
+
         return true;
     }
     else {
         return false;
     }
 }
-bool check_result_o (std::string a, std::string b, std::string c){
-    if ((a[0] == 'O' && b[0] == 'O' && c[0] == 'O') || (a[1] == 'O' && b[1] == 'O' && c[1] == 'O')
-        || (a[2] == 'O' && b[2] == 'O' && c[2] == 'O') || (a[0] == 'O' && a[1] == 'O' && a[2] == 'O')
-        || (b[0] == 'O' && b[1] == 'O' && b[2] == 'O') || (c[0] == 'O' && c[1] == 'O' && c[2] == 'O')
-        || (a[0] == 'O' && b[1] == 'O' && c[2] == 'O') || (c[0] == 'O' && b[1] == 'O' && a[2] == 'O')) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-int count_x (std::string a, std::string b, std::string c) {
+int count (std::string a, std::string b, std::string c, char d) {
     int count_x = 0;
     for (int i = 0; i < 3; i++) {
-        if (a[i] == 'X') {
+        if (a[i] == d) {
             count_x++;
         }
-        if (b[i] == 'X') {
+        if (b[i] == d) {
             count_x++;
         }
-        if (c[i] == 'X') {
+        if (c[i] == d) {
             count_x++;
         }
     }
+
     return count_x;
+
 }
-int count_o (std::string a, std::string b, std::string c) {
-    int count_o = 0;
-    for (int i = 0; i < 3; i++) {
-        if (a[i] == 'O') {
-            count_o++;
-        }
-        if (b[i] == 'O') {
-            count_o++;
-        }
-        if (c[i] == 'O') {
-            count_o++;
-        }
-    }
-    return count_o;
-}
-int count_s (std::string a, std::string b, std::string c) {
-    int count_s = 0;
-    for (int i = 0; i < 3; i++) {
-        if (a[i] == '.') {
-            count_s++;
-        }
-        if (b[i] == '.') {
-            count_s++;
-        }
-        if (c[i] == '.') {
-            count_s++;
-        }
-    }
-    return count_s;
-}
-std::string total_result (std::string s, std::string u, std::string f) {
+std::string total_result (std::string s, std::string u, std::string f, char d, char g, char sp) {
     if ((check(s) == "No!" || check(u) == "No!" || check(f) == "No!")
-        || (count_x(s,u,f) < count_o(s,u,f)
-            || ((count_x(s,u,f) == count_o(s,u,f) && check_result_x(s,u,f))))
-        || ((check_result_o(s,u,f) && count_x(s,u,f) > count_o(s,u,f))
-            || (check_result_x(s,u,f) == false && check_result_o(s,u,f) == false && count_x(s,u,f) == count_o(s,u,f)))
-        || ((check_result_x(s,u,f) && check_result_o(s,u,f)) && (count_x(s,u,f) > count_o(s,u,f) && count_s(s,u,f) == 0))) {
+        || (count (s, u, f, d) < count (s, u, f, g)
+            || ((count (s, u, f, d) == count (s, u, f, g) && check_result(s, u, f, d))))
+        || ((check_result(s, u, f, g) && count (s, u, f, d) > count (s, u, f, g))
+            || (check_result(s, u, f, d) == false && check_result(s, u, f, g) == false && count (s, u, f, d) == count (s, u, f, g)))
+        || ((check_result(s, u, f, d) && check_result(s, u, f, g)) && (count (s, u, f, d) > count (s, u, f, g) && count (s, u, f, sp) == 0))) {
         return "Incorrect!";
     }
-    if (check_result_x(s,u,f)) {
+    if (check_result(s, u, f, d)) {
         return "Petya won!";
-    }if (check_result_o(s,u,f)) {
+    }if (check_result(s, u, f, g)) {
         return "Vanya won!";
     }
-    if ((count_x(s,u,f) > count_o(s,u,f) && count_s(s,u,f) == 0)
-        || ((check_result_x(s,u,f) && check_result_o(s,u,f) == false) && count_x(s,u,f) == count_o(s,u,f))) {
+    if ((count (s, u, f, d) > count (s, u, f, g) && count (s, u, f, sp) == 0)
+        || ((check_result(s, u, f, d) && check_result(s, u, f, g) == false) && count (s, u, f, d) == count (s, u, f, g))) {
         return "Nobody!";
     }
     return {};
@@ -103,7 +65,7 @@ std::string total_result (std::string s, std::string u, std::string f) {
 
 int main() {
     std::string str_1, str_2, str_3;
-
+    char play_x = 88, play_o = 79, play_s = 46;
     std::cout << "Enter the data from the playing field\n";
     std::cout << "First string:";
     std::cin >> str_1;
@@ -112,5 +74,5 @@ int main() {
     std::cout << "\nThird string:";
     std::cin >> str_3;
 
-    std::cout << total_result(str_1, str_2, str_3);
+    std::cout << total_result(str_1, str_2, str_3, play_x, play_o, play_s);
 }
